@@ -14,7 +14,9 @@ import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
 public class MainActivity extends AppCompatActivity
-    implements ListTaskAdapter.OnItemTaskListener, AddTaskDialog.OnAddTaskListener {
+    implements ListTaskAdapter.OnItemTaskListener,
+        AddTaskDialog.OnAddTaskListener,
+        DetailsTaskDialog.OnTaskDetailListener {
 
   private ActivityMainBinding binding;
   private TaskViewModel taskViewModel;
@@ -62,7 +64,7 @@ public class MainActivity extends AppCompatActivity
 
   @Override
   public void onItemClick(Task task) {
-    DetailsTaskDialog dialog = new DetailsTaskDialog(task);
+    DetailsTaskDialog dialog = new DetailsTaskDialog(task, this);
     dialog.show(getSupportFragmentManager(), "details_task");
   }
 
@@ -74,6 +76,10 @@ public class MainActivity extends AppCompatActivity
     taskViewModel.insertTask(task);
   }
 
+  @Override
+  public void onDeleteTask(Task task) {
+    taskViewModel.deleteTask(task);
+  }
 
   @Override
   protected void onDestroy() {

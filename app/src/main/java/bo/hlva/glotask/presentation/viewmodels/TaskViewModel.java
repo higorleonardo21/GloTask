@@ -21,6 +21,7 @@ public class TaskViewModel extends ViewModel {
 
   private MutableLiveData<List<Task>> _itemsTask = new MutableLiveData<>();
   private MutableLiveData<Boolean> _itemAddTask = new MutableLiveData<>();
+  private MutableLiveData<Boolean> _itemDeleteTask = new MutableLiveData<>();
 
   @Inject
   public TaskViewModel(TaskRepository taskRepository) {
@@ -44,6 +45,24 @@ public class TaskViewModel extends ViewModel {
                 }));
 
     return _itemAddTask;
+  }
+
+  public LiveData<Boolean> deleteTask(Task task) {
+
+    compositeDisposable.add(
+        taskRepository
+            .deleteTask(task)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                () -> {
+                  _itemDeleteTask.setValue(true);
+                },
+                throwable -> {
+                  _itemDeleteTask.setValue(false);
+                }));
+
+    return _itemDeleteTask;
   }
 
   public LiveData<List<Task>> getItemsTask() {

@@ -15,8 +15,11 @@ public class DetailsTaskDialog extends BottomSheetDialogFragment {
   private DialogDetailsTaskBinding binding;
   private Task task;
 
-  public DetailsTaskDialog(Task task) {
+  private OnTaskDetailListener listener;
+
+  public DetailsTaskDialog(Task task, OnTaskDetailListener listener) {
     this.task = task;
+    this.listener = listener;
   }
 
   @Override
@@ -48,6 +51,7 @@ public class DetailsTaskDialog extends BottomSheetDialogFragment {
           @Override
           public void onClick(DialogInterface dialog, int w) {
 
+            listener.onDeleteTask(task);
             builder.create().dismiss();
             dismiss();
           }
@@ -63,5 +67,9 @@ public class DetailsTaskDialog extends BottomSheetDialogFragment {
         });
 
     builder.show();
+  }
+
+  public interface OnTaskDetailListener {
+    void onDeleteTask(Task task);
   }
 }
