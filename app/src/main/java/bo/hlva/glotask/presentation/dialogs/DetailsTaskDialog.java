@@ -35,7 +35,9 @@ public class DetailsTaskDialog extends BottomSheetDialogFragment {
 
     // set data
     binding.tvTitle.setText(task.getTitle());
+    binding.tvDate.setText(task.getDate());
     binding.tvDescription.setText(task.getDescription());
+
     binding.btnDelete.setOnClickListener(
         v -> {
           showDeleteDialog();

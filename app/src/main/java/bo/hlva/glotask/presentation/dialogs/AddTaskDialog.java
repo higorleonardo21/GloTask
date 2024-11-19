@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import androidx.annotation.Nullable;
 import bo.hlva.glotask.data.model.Task;
 import bo.hlva.glotask.databinding.DialogAddTaskBinding;
+import bo.hlva.glotask.utils.AppUtil;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
@@ -42,7 +43,7 @@ public class AddTaskDialog extends BottomSheetDialogFragment {
           String description = binding.edtDescription.getText().toString();
 
           if (!title.isEmpty() && !description.isEmpty()) {
-            Task task = new Task(title, description);
+            Task task = new Task(title, description, AppUtil.getCurrentDate());
             listener.onAddTask(task);
             dismiss();
           }
